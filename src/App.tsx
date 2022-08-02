@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ParkingLots from "./pages/ParkingLots";
 import Payment from "./pages/Payment";
 import SlotInput from "./pages/SlotInput";
+import AuthLayout from "./components/AuthLayout";
 
 const initContextData = { slots: {} };
 const AppContext: any = React.createContext([]);
@@ -19,8 +20,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SlotInput />} />
-          <Route path="/parking-lots" element={<ParkingLots />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route element={<AuthLayout />}>
+            <Route path="/parking-lots" element={<ParkingLots />} />
+            <Route path="/payment" element={<Payment />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>

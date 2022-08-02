@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./SubmitButton.css";
 import { SubmitButtonProps } from "../types";
 import { actions } from "../actions";
@@ -13,17 +13,18 @@ const SubmitButton = ({
 }: SubmitButtonProps) => {
   const { setSlot } = actions;
   const [appData, dispatchAppData] = useContext(AppContext);
+  const navigate = useNavigate();
 
   const submitHandler = () => {
     const lots = Array.from({ length: +data }, (v, i) => `P${i + 1}`);
     lots.forEach((lot) => {
       dispatchAppData(setSlot(lot, "", 0, 0));
     });
+    navigate(to);
   };
 
   return (
-    <Link
-      to={to}
+    <button
       onClick={submitHandler}
       className="submitButton"
       style={{
@@ -32,7 +33,7 @@ const SubmitButton = ({
       }}
     >
       {label}
-    </Link>
+    </button>
   );
 };
 

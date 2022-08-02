@@ -1,61 +1,23 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import "./ParkingLots.css";
-import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { AppContext } from "../App";
 import { actions } from "../actions";
 import { useNavigate } from "react-router-dom";
+import PopUpModal from "../components/PopUpModal";
+import Snackbar from "@mui/material/Snackbar/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const ParkingLots = () => {
   const [openModalPopMenu, setOpenModalPopMenu] = useState(false);
   const [currentSpaceIndex, setCurrentSpaceIndex] = useState("");
+  const [isFull, setIsFull] = useState(false);
   const navigate = useNavigate();
   const { setSlot } = actions;
   const [appData, dispatchAppData] = useContext(AppContext);
 
-  const handleClosePopMenu = () => setOpenModalPopMenu(false);
   const handleOpenPopMenu = (index: any) => {
     setOpenModalPopMenu(true);
     setCurrentSpaceIndex(index);
-  };
-
-  const PopMenu = () => {
-    const [currentRegNo, setCurrentRegNo] = useState("");
-
-    const inputHandler = (reg: {
-      target: { value: React.SetStateAction<string> };
-    }) => {
-      setCurrentRegNo(reg.target.value);
-    };
-
-    const allotSpace = () => {
-      dispatchAppData(setSlot(currentSpaceIndex, currentRegNo, Date.now(), 0));
-      handleClosePopMenu();
-    };
-
-    return (
-      <Modal
-        className="popUpContainer"
-        onClose={handleClosePopMenu}
-        open={openModalPopMenu}
-      >
-        <Box>
-          <div className="popUpTitle">Enter Register No:</div>
-          <TextField
-            id="outlined-basic"
-            label="Register Number"
-            variant="outlined"
-            margin="normal"
-            className="popUpInput"
-            onChange={inputHandler}
-          />
-          <Button onClick={handleClosePopMenu}>CLOSE</Button>
-          <Button onClick={allotSpace}>SUBMIT</Button>
-        </Box>
-      </Modal>
-    );
   };
 
   const handleOpenPayment = (currentIndex: string) => {
@@ -66,12 +28,35 @@ const ParkingLots = () => {
     navigate("/payment", { state: currentIndex });
   };
 
+  const allotRandomSlot = () => {
+    const freeSlots = Object.entries(appData.slots)
+      .filter(([currentIndex, data]: any) => data.registerNumber === "")
+      .map(([currentIndex, data]: any) => currentIndex);
+    const random = freeSlots[Math.floor(Math.random() * freeSlots.length)];
+    if (random !== undefined) {
+      handleOpenPopMenu(random);
+    } else {
+      setIsFull(true);
+    }
+  };
+
   return (
     <div className="parkingPageBackground">
-      <PopMenu />
-      {/*<Payment/>*/}
+      {openModalPopMenu && (
+        <PopUpModal
+          setOpenModalPopMenu={setOpenModalPopMenu}
+          currentSpaceIndex={currentSpaceIndex}
+        />
+      )}
+      <Snackbar
+        open={isFull}
+        autoHideDuration={2000}
+        onClose={() => setIsFull(false)}
+      >
+        <Alert severity="error">There are no empty parking space</Alert>
+      </Snackbar>
       <div className="parkingLotTitle">PARKING LOTS</div>
-      <button className="randomButton" onClick={() => {}}>
+      <button className="randomButton" onClick={allotRandomSlot}>
         ALLOCATE RANDOM SPACE
       </button>
       <div className="lotsContainer">
