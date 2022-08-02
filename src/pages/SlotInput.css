@@ -1,0 +1,23 @@
+.background {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.inputContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.title {
+  color: var(--mainColor);
+  font-size: 30px;
+  font-weight: bold;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+}

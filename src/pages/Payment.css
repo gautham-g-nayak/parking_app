@@ -1,0 +1,22 @@
+.section {
+  display: flex;
+  padding: 10px;
+}
+.subHeading {
+  font-size: large;
+  padding: 0px 5px;
+  text-align: center;
+}
+
+.details {
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
