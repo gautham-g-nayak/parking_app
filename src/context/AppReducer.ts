@@ -19,7 +19,5 @@ export default function appReducer(state: State, action: Action) {
           [action.payload.space]: action.payload.data,
         },
       };
-    default:
-      throw new Error();
   }
 }

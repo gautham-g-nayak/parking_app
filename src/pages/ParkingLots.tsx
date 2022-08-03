@@ -4,8 +4,8 @@ import { AppContext } from "../App";
 import { actions } from "../actions";
 import { useNavigate } from "react-router-dom";
 import PopUpModal from "../components/PopUpModal";
-import Snackbar from "@mui/material/Snackbar/Snackbar";
 import Alert from "@mui/material/Alert";
+import { Snackbar } from "@mui/material";
 
 const ParkingLots = () => {
   const [openModalPopMenu, setOpenModalPopMenu] = useState(false);
@@ -15,6 +15,7 @@ const ParkingLots = () => {
   const { setSlot } = actions;
   const [appData, dispatchAppData] = useContext(AppContext);
 
+  console.log(appData);
   const handleOpenPopMenu = (index: any) => {
     setOpenModalPopMenu(true);
     setCurrentSpaceIndex(index);

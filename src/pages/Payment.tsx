@@ -12,8 +12,8 @@ const Payment = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [appData, dispatchAppData] = useContext(AppContext);
-
-  const info = appData.slots[location.state];
+  const data = location.state ?? 'P1';
+  const info = appData.slots[data];
   const totalParkingTime = info.timeOut - info.timeIn;
   let parkingCharge: number;
   if (totalParkingTime <= 3600000 * 2) {
