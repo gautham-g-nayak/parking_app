@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test Input field component snapshot testing 1`] = `
+<input
+  class="inputField"
+  min="1"
+  placeholder="label"
+  type="text"
+/>
+`;
